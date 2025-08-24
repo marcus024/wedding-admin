@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from "emailjs-com";
 import {
   Facebook,
   Instagram,
@@ -8,6 +9,9 @@ import {
   UserCheck,
   ClipboardList
 } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+
+
 
 // This is a placeholder component for the main portfolio page.
 // In a real Inertia.js application, this component would receive
@@ -45,109 +49,295 @@ const PortfolioPage: React.FC<Props> = () => {
     },
   ];
 
+  // Animation variants for smooth entry and transitions
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.42, 0, 0.58, 1], // Correct easing type
+      },
+    },
+  };
+
+  const cardHoverEffect = {
+    scale: 1.05,
+    transition: { duration: 0.3 },
+  };
+
+  const buttonHoverEffect = {
+    scale: 1.05,
+    transition: { duration: 0.3 },
+  };
+
+ const form = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const sendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    if (form.current) {
+      emailjs
+        .sendForm(
+          "service_73i1j1a",     // ✅ your service ID
+          "template_45p8mh7",    // ✅ your template ID
+          form.current,
+          "p8C4pNE6hK_jJG3Br"    // ✅ your public key
+        )
+        .then(
+          () => {
+            setStatus("✅ Your inquiry has been sent successfully!");
+            form.current?.reset(); // clear form after submit
+          },
+          () => {
+            setStatus("❌ Something went wrong. Please try again.");
+          }
+        )
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
+
   return (
     // The main container. We'll use a neutral background and a common font.
     // The `bg-black/90` with `bg-blend-multiply` on the header creates the image overlay effect.
-    <div className="bg-white font-sans text-gray-800 antialiased">
+    <div className=" font-sans waving-background text-gray-800 antialiased overflow-x-hidden">
       {/* Tailwind CSS is assumed to be available in the environment. */}
 
       {/* Header Section */}
-      <header
-        className="relative bg-[url('https://placehold.co/1920x1080/4b5563/ffffff?text=THE+WEDDING+ADMIN')] bg-cover bg-center"
+      <motion.header
+        className="relative bg-[url('bg/tandem.png')] bg-cover bg-center"
         style={{
-          minHeight: '85vh',
+          minHeight: '120vh',
         }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
       >
         {/* Dark overlay to make text more readable */}
-        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="absolute inset-0 "></div>
 
         {/* Header content */}
-        <div className="relative z-10 flex flex-col items-start justify-center h-full text-left text-white p-8 md:p-16 lg:p-24">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 uppercase tracking-wide">
-            THE WEDDING ADMIN
-          </h1>
-          <p className="text-sm sm:text-base font-light mb-6 leading-relaxed max-w-xl">
-            STREAMLINING BUSINESS SUCCESS FOR WEDDING AND EVENT PROFESSIONALS
-          </p>
-          <p className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 max-w-xl leading-snug">
-            FLAT OUT WITH WEDDINGS AND BARELY KEEPING UP?
-          </p>
-          <p className="text-xl sm:text-2xl font-semibold mb-4 max-w-xl">
-            NO NEED TO DO IT ALL YOURSELF, MATE.
-          </p>
-          <p className="text-lg font-light mb-8 max-w-xl">
-            From emails to bookkeeping and socials, we’ll sort the nitty-gritty so you can focus on your clients.
-          </p>
-          <a
+        <motion.div
+          className="relative z-10 flex flex-col items-start justify-center h-full p-8 md:p-16 lg:p-24"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl text-[#212107] font-bold uppercase leading-10 tracking-wide text-left flex items-center"
+            variants={itemVariants}
+          >
+            <span className="flex items-center font-baskerville">
+              THE WEDDING &nbsp;
+              <span className="flex items-center" style={{ marginTop: '0.2rem' }}>
+                <img
+                  src="/admin.png"
+                  alt="A"
+                  className="h-8 sm:h-10 md:h-10 mx-1 inline-block"
+                />
+              </span>
+              DMIN
+            </span>
+          </motion.h1>
+          <motion.p
+            className="text-sm sm:text-base font-montserrat font-medium mb-20 text-[#212107] leading-relaxed max-w-xl text-left tracking-wider"
+            variants={itemVariants}
+          >
+            <span className="whitespace-nowrap">
+              STREAMLINING BUSINESS SUCCESS FOR WEDDING AND EVENT PROFESSIONALS
+            </span>
+          </motion.p>
+          <motion.p
+            className="text-3xl sm:text-4xl font-baskerville md:text-5xl text-[#212107] font-bold mb-6 max-w-2xl leading-none text-left"
+            variants={itemVariants}
+          >
+            FLAT OUT WITH
+            <br />
+            WEDDINGS AND BARELY
+            <br />
+            KEEPING UP?
+          </motion.p>
+          <motion.p
+            className="text-xl font-montserrat sm:text-2xl leading-relaxed text-[#212107] font-semibold mb-1 max-w-xl"
+            variants={itemVariants}
+          >
+            NO NEED TO DO IT ALL
+            <br />
+            YOURSELF, MATE.
+          </motion.p>
+          <motion.p
+            className="text-lg font-medium mb-2 max-w-xl font-montserrat text-[#212107] leading-relaxed tracking-widest"
+            variants={itemVariants}
+          >
+            From emails to bookkeeping
+            <br />
+            and socials, we’ll sort the
+            <br />
+            nitty-gritty so you can focus
+            <br />
+            on your clients.
+          </motion.p>
+          <motion.a
             href="#"
-            className="bg-gray-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-900 transition-all duration-300"
+            className="flex items-center gap-3 bg-[#212107] text-white font-semibold font-montserrat tracking-wider p-4 rounded-full shadow-lg transition-all duration-300 hover:bg-[#3a3a16]"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             BOOK A FREE CONSULTATION
-          </a>
-        </div>
-      </header>
+            <motion.span
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-white"
+              whileHover={{ x: 5 }} // arrow moves slightly to the right on hover
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-8 h-8 text-[#212107] transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={4}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </motion.span>
+          </motion.a>
+        </motion.div>
+      </motion.header>
 
       {/* The form section with the black background */}
-      <section className="bg-gray-900 text-white py-16">
+      <motion.section
+        className="bg-[#212107] text-white py-50 lg:py-10 md:py-10 px-10"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3 }}
+        style={{ marginTop: '-100px' }}
+      >
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
           {/* Text content on the left */}
           <div className="md:w-1/2">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              WEDDING AND EVENT SUPPLIERS' BEST MATE
-            </h2>
+            <h1 className="font-baskerville text-4xl md:text-5xl font-bold mb-6">
+              WEDDING AND
+              <br />
+              EVENT SUPPLIERS' 
+              <br />BEST MATE
+            </h1>
             <p className="font-light leading-relaxed">
               Running a wedding or events business isn’t just about creativity – it takes solid organisation, time management, and a keen eye for detail. That’s where **The Wedding Admin** comes in. With experience both as a **Virtual Assistant** and a **Wedding & Events Planner**, I get the juggle you’re dealing with. That’s why I’ve put together a service to take the pressure off – from sorting out the admin and emails to keeping things ticking along behind the scenes – so you can focus on what you do best: pulling off unforgettable events.
             </p>
           </div>
 
           {/* Contact form on the right */}
-          <div className="md:w-1/2 w-full">
-            <div className="bg-gray-800/80 p-8 rounded-xl shadow-2xl backdrop-blur-sm">
-              <h3 className="text-xl font-semibold mb-4 text-center">
-                WANT TO FOCUS ON WHAT MATTERS MOST? SAY G'DAY IN THE FORM BELOW!
-              </h3>
-              <form className="space-y-4">
+          <motion.div
+            className="md:w-1/2 px-20 w-full"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="bg-white p-10 rounded-[50px] w-[40vw] shadow-2xl backdrop-blur-sm">
+              <p className="text-4xl font-semibold mb-4 text-start font-baskerville text-[#212107]">
+                WANT TO FOCUS ON WHAT 
+                <br />
+                MATTERS MOST? SAY G'DAY 
+                <br />
+                IN THE FORM BELOW!
+              </p>
+              <form 
+              ref={form}
+              onSubmit={sendEmail}
+                className="space-y-4 justify-center flex flex-col items-center"
+              >
                 <input
                   type="text"
+                  name="user_name"
                   placeholder="YOUR NAME"
-                  className="w-full bg-gray-700/60 text-white rounded-lg p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full text-xl font-bold font-montserrat bg-[#dadada] text-gray-500 rounded-[20px] p-5 placeholder-gray-400 tracking-wider focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300"
                 />
                 <input
                   type="text"
+                  name="user_business"
                   placeholder="YOUR BUSINESS NAME"
-                  className="w-full bg-gray-700/60 text-white rounded-lg p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full text-xl font-bold font-montserrat bg-[#dadada] text-gray-500 rounded-[20px] p-5 placeholder-gray-400 tracking-wider focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300"
                 />
                 <input
                   type="email"
+                  name="user_email"
                   placeholder="EMAIL ADDRESS"
-                  className="w-full bg-gray-700/60 text-white rounded-lg p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full text-xl font-bold font-montserrat bg-[#dadada] text-gray-500 rounded-[20px] p-5 placeholder-gray-400 tracking-wider focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300"
                 />
                 <textarea
                   placeholder="INQUIRY"
+                  name="user_inquiry"
                   rows={4}
-                  className="w-full bg-gray-700/60 text-white rounded-lg p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full text-xl font-bold font-montserrat bg-[#dadada] text-gray-500 rounded-[20px] p-5 placeholder-gray-400 tracking-wider focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300"
                 ></textarea>
-                <button
+                <motion.button
                   type="submit"
-                  className="w-full bg-white text-gray-900 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300"
+                  disabled={loading}
+                  className={`w-[150px] flex justify-center items-center self-center font-montserrat tracking-wider font-bold py-3 rounded-[20px] shadow-lg transition-all duration-300 
+                    ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#212107] text-white hover:scale-105"}`}
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={buttonHoverEffect}
                 >
-                  SUBMIT
-                </button>
+                  {loading ? "Sending..." : "SUBMIT"}
+                </motion.button>
               </form>
+              {status && (
+                <p
+                  className={`mt-4 text-lg font-semibold ${
+                    status.startsWith("✅") ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {status}
+                </p>
+              )}
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
+      
 
       {/* Team section */}
       <section className="bg-white py-20 px-4">
         <div className="container mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">
+          <motion.h2
+            className="text-4xl font-bold text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
             SAY HELLO TO THE TEAM
-          </h2>
+          </motion.h2>
           <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Team leader section */}
-            <div className="w-full md:w-1/3 text-center">
+            <motion.div
+              className="w-full md:w-1/3 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={cardHoverEffect}
+            >
               <img
                 src="https://placehold.co/300x400/f3f4f6/6b7280?text=MIGUEL"
                 alt="Miguel / Miggy"
@@ -155,10 +345,16 @@ const PortfolioPage: React.FC<Props> = () => {
               />
               <h3 className="text-2xl font-bold">MIGUEL / MIGGY</h3>
               <p className="text-gray-500 text-sm mt-1">VA PRODUCTIVITY STRATEGIST | FOUNDER</p>
-            </div>
+            </motion.div>
 
             {/* Team description section */}
-            <div className="w-full md:w-2/3">
+            <motion.div
+              className="w-full md:w-2/3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
               <p className="leading-relaxed text-gray-600 mb-4">
                 With a passion for creating seamless experiences, Miguel brings a unique combination of expertise in the events and virtual assistant industries. As a wedding planner and souvenir photographer, Miguel has been immersed in the wedding scene for over a decade, working under the mentorship of an 11-year industry veteran. In this time, he has played a pivotal role in coordinating and executing over 100 weddings, ensuring every detail is flawlessly managed.
               </p>
@@ -168,56 +364,99 @@ const PortfolioPage: React.FC<Props> = () => {
               <p className="leading-relaxed text-gray-600 mb-4">
                 Through The Wedding Admin, Miguel combines his passion for organization and his understanding of the wedding and event world to help industry professionals thrive by providing tailored virtual assistance services.
               </p>
-            </div>
+            </motion.div>
           </div>
 
           {/* Other team members */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-16">
+          <motion.div
+            className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-16"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             {teamMembers.map((member, index) => (
-              <div key={index} className="text-center">
+              <motion.div
+                key={index}
+                className="text-center"
+                variants={itemVariants}
+                whileHover={cardHoverEffect}
+              >
                 <img
                   src={member.image}
                   alt={member.name}
                   className="w-40 h-40 object-cover rounded-full mx-auto mb-4 border-4 border-gray-200"
                 />
                 <p className="text-lg font-semibold">{member.name}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Investment section with the light background and overlay */}
-      <section className="relative py-20 bg-[url('https://placehold.co/1920x1080/f3f4f6/6b7280?text=Background')] bg-cover bg-center text-center text-white">
+      <motion.section
+        className="relative py-20 bg-[url('https://placehold.co/1920x1080/f3f4f6/6b7280?text=Background')] bg-cover bg-center text-center text-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="relative z-10 container mx-auto px-4">
-          <p className="text-xl md:text-2xl font-semibold mb-4">
+          <motion.p
+            className="text-xl md:text-2xl font-semibold mb-4"
+            variants={itemVariants}
+          >
             WOULD YOU INVEST AUD 50.00 PER HOUR ...
-          </p>
-          <p className="text-3xl md:text-5xl font-bold mb-8">
+          </motion.p>
+          <motion.p
+            className="text-3xl md:text-5xl font-bold mb-8"
+            variants={itemVariants}
+          >
             if that means you can earn an extra AUD 500.00 per hour?
-          </p>
-          <p className="text-xl md:text-2xl font-light">
+          </motion.p>
+          <motion.p
+            className="text-xl md:text-2xl font-light"
+            variants={itemVariants}
+          >
             HOW ABOUT JUST AUD 12.50?
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* "How It Works" section */}
       <section className="bg-gray-900 text-white py-20 px-4">
         <div className="container mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16">
+          <motion.h2
+            className="text-4xl font-bold text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
             HOW IT WORKS
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          </motion.h2>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-12"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             {howItWorksSteps.map((step, index) => (
-              <div key={index} className="text-center">
+              <motion.div
+                key={index}
+                className="text-center"
+                variants={itemVariants}
+                whileHover={cardHoverEffect}
+              >
                 <div className="flex justify-center mb-4">{step.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{step.title}</h3>
                 <p className="font-light leading-relaxed">{step.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -228,7 +467,13 @@ const PortfolioPage: React.FC<Props> = () => {
             TRUSTED BY EVENT SUPPLIERS
           </p>
           {/* Testimonials */}
-          <div className="text-gray-400 text-sm mb-8 space-y-4">
+          <motion.div
+            className="text-gray-400 text-sm mb-8 space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
             <p className="font-light italic">
               "You're doing so well, Miggy. I'm like a proud mom!"
               <br />
@@ -244,21 +489,21 @@ const PortfolioPage: React.FC<Props> = () => {
               <br />
               <span className="font-normal text-gray-500">- Grace, Event Photographer</span>
             </p>
-          </div>
+          </motion.div>
 
           <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" aria-label="Facebook">
+            <motion.a href="#" aria-label="Facebook" whileHover={{ scale: 1.2 }}>
               <Facebook className="w-6 h-6 hover:text-white transition-colors" />
-            </a>
-            <a href="#" aria-label="Instagram">
+            </motion.a>
+            <motion.a href="#" aria-label="Instagram" whileHover={{ scale: 1.2 }}>
               <Instagram className="w-6 h-6 hover:text-white transition-colors" />
-            </a>
-            <a href="#" aria-label="Twitter">
+            </motion.a>
+            <motion.a href="#" aria-label="Twitter" whileHover={{ scale: 1.2 }}>
               <Twitter className="w-6 h-6 hover:text-white transition-colors" />
-            </a>
-            <a href="#" aria-label="LinkedIn">
+            </motion.a>
+            <motion.a href="#" aria-label="LinkedIn" whileHover={{ scale: 1.2 }}>
               <Linkedin className="w-6 h-6 hover:text-white transition-colors" />
-            </a>
+            </motion.a>
           </div>
           <p className="text-sm">
             © 2024 THE WEDDING ADMIN | ALL RIGHTS RESERVED
