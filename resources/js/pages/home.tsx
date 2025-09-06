@@ -25,9 +25,9 @@ interface Props {}
 const PortfolioPage: React.FC<Props> = () => {
   // Hardcoded data for the team members to match the image.
   const teamMembers = [
-    { name: 'CALOY', image: 'https://placehold.co/300x300/a39e99/ffffff?text=CALOY' },
-    { name: 'OLI', image: 'https://placehold.co/300x300/a39e99/ffffff?text=OLI' },
-    { name: 'MARIAN', image: 'https://placehold.co/300x300/a39e99/ffffff?text=MARIAN' },
+    { name: 'CALOY', image: 'team_images/caloy.png', role: 'WEBSITE DEVELOPER' },
+    { name: 'OLI', image: 'team_images/oliver.png', role: 'VA LEAD GENERATION' },
+    { name: 'MARIAN', image: 'team_images/marian.png', role: 'VA BOOKEEPER' },
   ];
 
   // Hardcoded data for the "How It Works" section.
@@ -240,8 +240,8 @@ const PortfolioPage: React.FC<Props> = () => {
               EVENT SUPPLIERS' 
               <br />BEST MATE
             </h1>
-            <p className="font-light leading-relaxed">
-              Running a wedding or events business isn’t just about creativity – it takes solid organisation, time management, and a keen eye for detail. That’s where **The Wedding Admin** comes in. With experience both as a **Virtual Assistant** and a **Wedding & Events Planner**, I get the juggle you’re dealing with. That’s why I’ve put together a service to take the pressure off – from sorting out the admin and emails to keeping things ticking along behind the scenes – so you can focus on what you do best: pulling off unforgettable events.
+            <p className="font-light leading-relaxed font-montserrat text-xl">
+              Running a wedding or events business isn’t just about creativity – it takes solid organisation, time management, and a keen eye for detail. That’s where <span className="font-semibold">The Wedding Admin</span> comes in. With experience both as a <span className='font-semibold'>Virtual Assistant</span>  and a <span className='font-semibold'>Wedding & Events Planner</span>, I get the juggle you’re dealing with. That’s why I’ve put together a service to take the pressure off – from sorting out the admin and emails to keeping things ticking along behind the scenes – so you can focus on what you do best: pulling off unforgettable events.
             </p>
           </div>
 
@@ -317,59 +317,70 @@ const PortfolioPage: React.FC<Props> = () => {
       
 
       {/* Team section */}
-      <section className="bg-white py-20 px-4">
+      <section className=" waving-background-team h-auto py-20 px-10">
         <div className="container mx-auto">
-          <motion.h2
-            className="text-4xl font-bold text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            SAY HELLO TO THE TEAM
-          </motion.h2>
-          <div className="flex flex-col md:flex-row items-center gap-12">
+          <motion.div className=" flex flex-row ">
+            <motion.div className="">
+              <motion.h2
+                className="text-8xl font-bold font-baskerville text-[#212107] text-start "
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                SAY HELLO TO THE TEAM
+              </motion.h2>
+              <motion.p
+                className=" font-montserrat text-[#212107] text-start text-3xl mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                THE HEART OF <span className=" font-bold">THE WEDDING ADMIN</span>
+              </motion.p>
+            </motion.div>
+            <motion.img src='team_images/vine.png' className="relative right-[-100px] top-[-20px] w-[53%] h-auto rounded-lg  mb-4">
+
+            </motion.img>
+          </motion.div>
+          
+          <motion.div className="flex flex-col  items-center ">
             {/* Team leader section */}
             <motion.div
-              className="w-full md:w-1/3 text-center"
+              className="w-full  flex flex-row text-center space-x-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true, amount: 0.3 }}
-              whileHover={cardHoverEffect}
             >
               <img
-                src="https://placehold.co/300x400/f3f4f6/6b7280?text=MIGUEL"
+                src="/team_images/miguel.png"
                 alt="Miguel / Miggy"
-                className="w-full h-auto rounded-lg shadow-xl mb-4"
+                className="w-auto h-[60vh] rounded-lg shadow-xl mb-4"
               />
-              <h3 className="text-2xl font-bold">MIGUEL / MIGGY</h3>
-              <p className="text-gray-500 text-sm mt-1">VA PRODUCTIVITY STRATEGIST | FOUNDER</p>
+              <motion.div className="flex flex-col justify-start items-start ">
+                <motion.div className="flex flex-col text-start ">
+                  <h3 className="text-6xl font-bold font-baskerville tracking-wider text-[#212107]">MIGUEL/MIGGY</h3>
+                  <p className=" text-2xl mt-1 font-montserrat font-medium tracking-wider text-[#212107]">VA PRODUCTIVITY STRATEGIST | FOUNDER</p>
+                </motion.div>
+                <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
+                  With a passion for creating seamless experiences, Miguel brings a unique combination of expertise in the events and virtual assistant industries. As a wedding planner and souvenir photographer, Miguel has been immersed in the wedding scene for over a decade, working under the mentorship of an 11-year industry veteran. In this time, he has played a pivotal role in coordinating and executing over 100 weddings, ensuring every detail is flawlessly managed.
+                </motion.p>
+              </motion.div>
             </motion.div>
-
-            {/* Team description section */}
-            <motion.div
-              className="w-full md:w-2/3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <p className="leading-relaxed text-gray-600 mb-4">
-                With a passion for creating seamless experiences, Miguel brings a unique combination of expertise in the events and virtual assistant industries. As a wedding planner and souvenir photographer, Miguel has been immersed in the wedding scene for over a decade, working under the mentorship of an 11-year industry veteran. In this time, he has played a pivotal role in coordinating and executing over 100 weddings, ensuring every detail is flawlessly managed.
-              </p>
-              <p className="leading-relaxed text-gray-600 mb-4">
+            <motion.div className="flex flex-col text-justify space-y-4">
+              <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
                 Complementing this hands-on events experience, Miguel has spent nearly three years as a Virtual Executive Assistant, supporting Australian and U.S. business owners across various industries. His background in streamlining operations and managing day-to-day tasks makes him a versatile and results-driven professional.
-              </p>
-              <p className="leading-relaxed text-gray-600 mb-4">
-                Through The Wedding Admin, Miguel combines his passion for organization and his understanding of the wedding and event world to help industry professionals thrive by providing tailored virtual assistance services.
-              </p>
+              </motion.p>
+              <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
+                Through <span className="font-bold">The Wedding Admin</span>, Miguel combines his passion for organization and his understanding of the wedding and event world to help industry professionals thrive by providing tailored virtual assistance services.
+              </motion.p>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Other team members */}
           <motion.div
-            className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-16"
+            className="flex flex-col sm:flex-row  justify-center items-center gap-8 mt-16"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
@@ -385,9 +396,10 @@ const PortfolioPage: React.FC<Props> = () => {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-40 h-40 object-cover rounded-full mx-auto mb-4 border-4 border-gray-200"
+                  className="rounded-[20px] h-[60vh] object-cover  mx-auto mb-4"
                 />
-                <p className="text-lg font-semibold">{member.name}</p>
+                <p className="text-6xl font-bold text-[#212107] font-baskerville">{member.name}</p>
+                <p className="text-xm font-semibold font-montserrat">{member.role}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -395,7 +407,7 @@ const PortfolioPage: React.FC<Props> = () => {
       </section>
 
       {/* Investment section with the light background and overlay */}
-      <motion.section
+      {/* <motion.section
         className="relative py-20 bg-[url('https://placehold.co/1920x1080/f3f4f6/6b7280?text=Background')] bg-cover bg-center text-center text-white"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -423,10 +435,10 @@ const PortfolioPage: React.FC<Props> = () => {
             HOW ABOUT JUST AUD 12.50?
           </motion.p>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* "How It Works" section */}
-      <section className="bg-gray-900 text-white py-20 px-4">
+      {/* <section className="bg-gray-900 text-white py-20 px-4">
         <div className="container mx-auto">
           <motion.h2
             className="text-4xl font-bold text-center mb-16"
@@ -458,16 +470,16 @@ const PortfolioPage: React.FC<Props> = () => {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer Section */}
-      <footer className="bg-gray-950 text-gray-500 py-12 px-4">
+      {/* <footer className="bg-gray-950 text-gray-500 py-12 px-4">
         <div className="container mx-auto text-center">
           <p className="text-lg font-semibold mb-4">
             TRUSTED BY EVENT SUPPLIERS
-          </p>
+          </p> */}
           {/* Testimonials */}
-          <motion.div
+          {/* <motion.div
             className="text-gray-400 text-sm mb-8 space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -509,7 +521,7 @@ const PortfolioPage: React.FC<Props> = () => {
             © 2024 THE WEDDING ADMIN | ALL RIGHTS RESERVED
           </p>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };
