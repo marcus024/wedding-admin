@@ -5,24 +5,46 @@ import {
   Instagram,
   Twitter,
   Linkedin,
-  PartyPopper,
-  UserCheck,
-  ClipboardList
 } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 
 
+const teamLeaderTextVariants: Variants = {
+  initial: { opacity: 0, x: -50 },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut", 
+    },
+  },
+};
 
-// This is a placeholder component for the main portfolio page.
-// In a real Inertia.js application, this component would receive
-// props from a server-side controller (e.g., Laravel, Rails).
+const imageVariants: Variants = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut", 
+    },
+  },
+};
 
-// Define the type for any props this component might receive.
-// The linter warns against empty interfaces, so we'll be more explicit.
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
+const lineVariants: Variants = {
+  hidden: { scaleY: 0 },
+  show: {
+    scaleY: 1,
+    transition: {
+      duration: 1.5,
+      ease: [0.42, 0, 0.58, 1], // ✅ easeInOut as bezier
+    },
+  },
+};
 
-const PortfolioPage: React.FC<Props> = () => {
+const PortfolioPage: React.FC = () => {
   // Hardcoded data for the team members to match the image.
   const teamMembers = [
     { name: 'CALOY', image: 'team_images/caloy.png', role: 'WEBSITE DEVELOPER' },
@@ -33,17 +55,17 @@ const PortfolioPage: React.FC<Props> = () => {
   // Hardcoded data for the "How It Works" section.
   const howItWorksSteps = [
     {
-      icon: <PartyPopper className="w-12 h-12 text-black/80 mb-4" />,
+      icon: '/niche/cone.png',
       title: 'CUSTOM CONSULTATION EXPERIENCE',
       description: 'At The Wedding Admin, we make outsourcing simple and easy. Book a free consultation session to discuss your goals and identify the tasks you can delegate, giving you more time to focus on what truly matters whether it\'s growing your business or spending quality time with loved ones.',
     },
     {
-      icon: <UserCheck className="w-12 h-12 text-black/80 mb-4" />,
+      icon: '/niche/cone.png',
       title: 'BRINGING THE RIGHT FIT',
       description: 'With the result of the custom consultation, we\'ll interview skilled applicants, conduct thorough background checks, and match you with the perfect fit. Beyond finding the right fit, Miguel will personally oversee every task, ensuring it\'s completed accurately, and efficiently while helping you build a seamless and successful partnership tailored to your business needs.',
     },
     {
-      icon: <ClipboardList className="w-12 h-12 text-black/80 mb-4" />,
+      icon: '/niche/cone.png',
       title: 'FOCUS ON WHAT TRULY MATTERS',
       description: 'Once your VA has access to your accounts, you\'re free to go! With all the tasks taken care of, you\'ll enjoy more free time than ever before. Go on a weekend getaway, catch up with your mates, or explore new opportunities. Less stress, more freedom... with The Wedding Admin, it\'s happy days all around!',
     },
@@ -316,141 +338,177 @@ const PortfolioPage: React.FC<Props> = () => {
       </motion.section>
       
 
-      {/* Team section */}
-      <section className=" waving-background-team h-auto py-20 px-10">
-        <div className="container mx-auto">
-          <motion.div className=" flex flex-row ">
-            <motion.div className="">
-              <motion.h2
-                className="text-8xl font-bold font-baskerville text-[#212107] text-start "
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, amount: 0.3 }}
-              >
-                SAY HELLO TO THE TEAM
-              </motion.h2>
-              <motion.p
-                className=" font-montserrat text-[#212107] text-start text-3xl mb-12"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, amount: 0.3 }}
-              >
-                THE HEART OF <span className=" font-bold">THE WEDDING ADMIN</span>
-              </motion.p>
-            </motion.div>
-            <motion.img src='team_images/vine.png' className="relative right-[-100px] top-[-20px] w-[53%] h-auto rounded-lg  mb-4">
-
-            </motion.img>
-          </motion.div>
-          
-          <motion.div className="flex flex-col  items-center ">
-            {/* Team leader section */}
-            <motion.div
-              className="w-full  flex flex-row text-center space-x-10"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <img
-                src="/team_images/miguel.png"
-                alt="Miguel / Miggy"
-                className="w-auto h-[60vh] rounded-lg shadow-xl mb-4"
-              />
-              <motion.div className="flex flex-col justify-start items-start ">
-                <motion.div className="flex flex-col text-start ">
-                  <h3 className="text-6xl font-bold font-baskerville tracking-wider text-[#212107]">MIGUEL/MIGGY</h3>
-                  <p className=" text-2xl mt-1 font-montserrat font-medium tracking-wider text-[#212107]">VA PRODUCTIVITY STRATEGIST | FOUNDER</p>
-                </motion.div>
-                <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
-                  With a passion for creating seamless experiences, Miguel brings a unique combination of expertise in the events and virtual assistant industries. As a wedding planner and souvenir photographer, Miguel has been immersed in the wedding scene for over a decade, working under the mentorship of an 11-year industry veteran. In this time, he has played a pivotal role in coordinating and executing over 100 weddings, ensuring every detail is flawlessly managed.
-                </motion.p>
-              </motion.div>
-            </motion.div>
-            <motion.div className="flex flex-col text-justify space-y-4">
-              <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
-                Complementing this hands-on events experience, Miguel has spent nearly three years as a Virtual Executive Assistant, supporting Australian and U.S. business owners across various industries. His background in streamlining operations and managing day-to-day tasks makes him a versatile and results-driven professional.
-              </motion.p>
-              <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
-                Through <span className="font-bold">The Wedding Admin</span>, Miguel combines his passion for organization and his understanding of the wedding and event world to help industry professionals thrive by providing tailored virtual assistance services.
-              </motion.p>
-            </motion.div>
-          </motion.div>
-
-          {/* Other team members */}
+      <section className=" waving-background-team h-auto py-20 ">
+      <motion.div className="container mx-auto px-10">
+        <motion.div className=" flex flex-row ">
           <motion.div
-            className="flex flex-col sm:flex-row  justify-center items-center gap-8 mt-16"
+            className=""
             variants={containerVariants}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
+            animate="show"
           >
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                variants={itemVariants}
-                whileHover={cardHoverEffect}
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="rounded-[20px] h-[60vh] object-cover  mx-auto mb-4"
-                />
-                <p className="text-6xl font-bold text-[#212107] font-baskerville">{member.name}</p>
-                <p className="text-xm font-semibold font-montserrat">{member.role}</p>
-              </motion.div>
-            ))}
+            <motion.h2
+              className="text-8xl font-bold font-baskerville text-[#212107] text-start "
+              variants={itemVariants}
+            >
+              SAY HELLO TO THE TEAM
+            </motion.h2>
+            <motion.p
+              className=" font-montserrat text-[#212107] text-start text-3xl mb-12"
+              variants={itemVariants}
+            >
+              THE HEART OF <span className=" font-bold">THE WEDDING ADMIN</span>
+            </motion.p>
           </motion.div>
-        </div>
-      </section>
+          <motion.img
+            src="team_images/vine.png"
+            className="relative right-[-100px] top-[-20px] w-[53%] h-auto rounded-lg mb-4"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+          />
+        </motion.div>
 
-      {/* Investment section with the light background and overlay */}
-      {/* <motion.section
-        className="relative py-20 bg-[url('https://placehold.co/1920x1080/f3f4f6/6b7280?text=Background')] bg-cover bg-center text-center text-white"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 container mx-auto px-4">
-          <motion.p
-            className="text-xl md:text-2xl font-semibold mb-4"
-            variants={itemVariants}
-          >
-            WOULD YOU INVEST AUD 50.00 PER HOUR ...
-          </motion.p>
-          <motion.p
-            className="text-3xl md:text-5xl font-bold mb-8"
-            variants={itemVariants}
-          >
-            if that means you can earn an extra AUD 500.00 per hour?
-          </motion.p>
-          <motion.p
-            className="text-xl md:text-2xl font-light"
-            variants={itemVariants}
-          >
-            HOW ABOUT JUST AUD 12.50?
-          </motion.p>
-        </div>
-      </motion.section> */}
-
-      {/* "How It Works" section */}
-      {/* <section className="bg-gray-900 text-white py-20 px-4">
-        <div className="container mx-auto">
-          <motion.h2
-            className="text-4xl font-bold text-center mb-16"
+        <motion.div className="flex flex-col items-center ">
+          {/* Team leader section */}
+          <motion.div
+            className="w-full flex flex-row text-center space-x-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            HOW IT WORKS
-          </motion.h2>
+            <motion.img
+              src="/team_images/miguel.png"
+              alt="Miguel / Miggy"
+              className="w-auto h-[60vh] rounded-lg shadow-xl mb-4"
+              variants={imageVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.5 }}
+            />
+            <motion.div
+              className="flex flex-col justify-start items-start "
+              variants={teamLeaderTextVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              <motion.div className="flex flex-col text-start ">
+                <h3 className="text-6xl font-bold font-baskerville tracking-wider text-[#212107]">
+                  MIGUEL/MIGGY
+                </h3>
+                <p className=" text-2xl mt-1 font-montserrat font-medium tracking-wider text-[#212107]">
+                  VA PRODUCTIVITY STRATEGIST | FOUNDER
+                </p>
+              </motion.div>
+              <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
+                With a passion for creating seamless experiences, Miguel brings a unique combination of expertise in the events and virtual assistant industries. As a wedding planner and souvenir photographer, Miguel has been immersed in the wedding scene for over a decade, working under the mentorship of an 11-year industry veteran. In this time, he has played a pivotal role in coordinating and executing over 100 weddings, ensuring every detail is flawlessly managed.
+              </motion.p>
+            </motion.div>
+          </motion.div>
+          <motion.div className="flex flex-col text-justify space-y-4">
+            <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
+              Complementing this hands-on events experience, Miguel has spent nearly three years as a Virtual Executive Assistant, supporting Australian and U.S. business owners across various industries. His background in streamlining operations and managing day-to-day tasks makes him a versatile and results-driven professional.
+            </motion.p>
+            <motion.p className="font-montserrat tracking-wider text-justify text-[#212107] justify-center text-justify text-2xl mt-4 leading-relaxed">
+              Through <span className="font-bold">The Wedding Admin</span>, Miguel combines his passion for organization and his understanding of the wedding and event world to help industry professionals thrive by providing tailored virtual assistance services.
+            </motion.p>
+          </motion.div>
+        </motion.div>
+
+        {/* Other team members */}
+        <motion.div
+          className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {teamMembers.map((member, index) => (
+            <motion.div
+              key={index}
+              className="text-center"
+              variants={itemVariants}
+              whileHover={cardHoverEffect}
+            >
+              <img
+                src={member.image}
+                alt={member.name}
+                className="rounded-[20px] h-[60vh] object-cover mx-auto mb-4"
+              />
+              <p className="text-6xl font-bold text-[#212107] font-baskerville">{member.name}</p>
+              <p className="text-xm font-semibold font-montserrat">{member.role}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="relative bg-transparent bg-cover bg-center min-h-screen mt-[-100px] w-full"
+      >
+        <img src="bg/bg-rate.png" className="h-[80%]" alt="" />
+        <motion.div
+          className="z-[100px] absolute top-2 left-0 right-0 text-center text-white"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.div className=" h-[60vh] bg-gradient-to-t from-[#212107]/20 to-[#212107]/1 w-full mx-auto flex flex-col gap-10 justify-end items-center ">
+            <motion.p
+              className="text-3xl tracking-wider text-[#212101] font-montserrat font-medium mb-4"
+              variants={itemVariants}
+            >
+              WOULD YOU INVEST AUD 50.00 PER HOUR ...
+            </motion.p>
+            <motion.p
+              className="text-6xl font-baskerville text-[#212101] font-bold "
+              variants={itemVariants}
+            >
+              if that means you can earn an
+            </motion.p>
+          </motion.div>
+
+          <motion.p
+            className="text-6xl font-baskerville text-[#212101] font-bold "
+            variants={itemVariants}
+          >
+            extra AUD 500.00 per hour?
+          </motion.p>
+          <motion.p
+            className="text-3xl tracking-widest text-[#212101] font-montserrat font-medium"
+            variants={itemVariants}
+          >
+            <motion.div
+              className="w-1 h-[30vh] bg-[#212107] mx-auto my-10"
+              variants={lineVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.5 }}
+            />
+            HOW ABOUT JUST <span className="font-bold text-[#212107]">AUD 12.50</span>?
+          </motion.p>
+        </motion.div>
+      </motion.div>
+    </section>
+
+
+      {/* "How It Works" section */}
+      <section className=" text-white bg-[#212107] ">
+        <div className="container mx-auto">
+          <div className="bg-[url('bg/howitworks.png')] bg-cover bg-center p-10 h-[40vh]  flex flex-col justify-center items-center">
+            <motion.h2
+              className="text-8xl font-bold text-center font-baskerville text-white"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              HOW IT WORKS
+            </motion.h2>
+          </div>
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-12"
+            className="grid grid-cols-1 mt-10 mx-10 pb-20 md:grid-cols-3 gap-12"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
@@ -463,65 +521,84 @@ const PortfolioPage: React.FC<Props> = () => {
                 variants={itemVariants}
                 whileHover={cardHoverEffect}
               >
-                <div className="flex justify-center mb-4">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                <p className="font-light leading-relaxed">{step.description}</p>
+                <div className="flex justify-center gap-2 mb-4">
+                  {[...Array(index + 1)].map((_, i) => (
+                    <img
+                      key={i}
+                      src={step.icon}
+                      alt={`${step.title} icon ${i + 1}`}
+                      className="w-30 h-30 object-contain"
+                    />
+                  ))}
+                </div>
+                <h3 className="text-3xl font-montserrat tracking-widest font-bold mb-3 text-white">{step.title}</h3>
+                <p className="font-bold leading-relaxed italic text-justify font-montserrat text-white">{step.description}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
-      </section> */}
+      </section>
 
       {/* Footer Section */}
-      {/* <footer className="bg-gray-950 text-gray-500 py-12 px-4">
+      <footer className="bg-[#212107] text-gray-500 py-12 px-10">
         <div className="container mx-auto text-center">
-          <p className="text-lg font-semibold mb-4">
+          <p className="text-5xl text-white tracking-widest font-montserrat font-bold mb-10">
             TRUSTED BY EVENT SUPPLIERS
-          </p> */}
+          </p> 
           {/* Testimonials */}
-          {/* <motion.div
-            className="text-gray-400 text-sm mb-8 space-y-4"
+          <motion.div
+            className="text-gray-400 text-sm mb-8 flex flex-row space-x-15"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            <p className="font-light italic">
-              "You're doing so well, Miggy. I'm like a proud mom!"
-              <br />
-              <span className="font-normal text-gray-500">- Zsarina, Weddings by Zilla</span>
-            </p>
-            <p className="font-light italic">
-              "Have absolutely loved your work to this point. Not only am I getting things done I would never have imagined, I'm starting to get paid with design work, I'm getting time to play footy and go for runs, and most importantly - be with my little family. Mick was Gobsmacked with our profit margin increase, and he really gets like that!"
-              <br />
-              <span className="font-normal text-gray-500">- Jacob, Wedding Souvenir</span>
-            </p>
-            <p className="font-light italic">
-              "Thanks for being capable and dependable staff. Appreciated :)"
-              <br />
-              <span className="font-normal text-gray-500">- Grace, Event Photographer</span>
-            </p>
+                <div className="w-1/3 justify-center items-center gap-10  flex flex-col ">
+                  <p className="font-bold text-justify font-montserrat text-white text-xl italic">
+                    "You're doing so well, Miggy. I'm like a proud mom!"
+                  </p>
+                  <span className="font-medium font-montserrat text-xl text-white">- Zsarina, Weddings by Zilla</span>
+                </div>
+                <div className="w-1/3 justify-center items-center gap-10  flex flex-col">
+                  <p className="font-bold text-justify font-montserrat text-white text-xl italic">
+                    "Have absolutely loved your work to this point. Not only am I getting things done I would never have imagined, I'm starting to get paid with design work, I'm getting time to play footy and go for runs, and most importantly - be with my little family. Mick was Gobsmacked with our profit margin increase, and he really gets like that!"
+                  </p>
+                  <span className="font-medium font-montserrat text-xl text-white">- Jacob, Wedding Souvenir</span>
+                </div>
+                <div className="w-1/3 justify-center items-center gap-10  flex flex-col">
+                  <p className="font-bold text-justify font-montserrat text-white text-xl italic">
+                      "Thanks for being capable and dependable staff. Appreciated :)"
+                  </p>
+                  <span className="font-medium font-montserrat text-xl text-white">- Grace, Event Photographer</span>
+                </div>
           </motion.div>
-
-          <div className="flex justify-center space-x-6 mb-8">
-            <motion.a href="#" aria-label="Facebook" whileHover={{ scale: 1.2 }}>
-              <Facebook className="w-6 h-6 hover:text-white transition-colors" />
-            </motion.a>
-            <motion.a href="#" aria-label="Instagram" whileHover={{ scale: 1.2 }}>
-              <Instagram className="w-6 h-6 hover:text-white transition-colors" />
-            </motion.a>
-            <motion.a href="#" aria-label="Twitter" whileHover={{ scale: 1.2 }}>
-              <Twitter className="w-6 h-6 hover:text-white transition-colors" />
-            </motion.a>
-            <motion.a href="#" aria-label="LinkedIn" whileHover={{ scale: 1.2 }}>
-              <Linkedin className="w-6 h-6 hover:text-white transition-colors" />
-            </motion.a>
+          <div className="flex flex-row justify-between  items-center pt-10">
+              <div className="flex flex-col justify-center space-y-2 ">
+                <motion.a href="#" aria-label="Facebook" whileHover={{ scale: 1.2 }}>
+                  <Facebook className="w-6 h-6 hover:text-white text-white transition-colors" />
+                </motion.a>
+                <motion.a href="#" aria-label="Instagram" whileHover={{ scale: 1.2 }}>
+                  <Instagram className="w-6 h-6 hover:text-white text-white transition-colors" />
+                </motion.a>
+                <motion.a href="#" aria-label="Twitter" whileHover={{ scale: 1.2 }}>
+                  <Twitter className="w-6 h-6 hover:text-white text-white transition-colors" />
+                </motion.a>
+                <motion.a href="#" aria-label="LinkedIn" whileHover={{ scale: 1.2 }}>
+                  <Linkedin className="w-6 h-6 hover:text-white text-white transition-colors" />
+                </motion.a>
+              </div>
+              <div className="flex flex-col items-end justify-end text-right text-white font-bold font-montserrat text-sm">
+                <div className="flex flex-row justify-end items-center gap-10 mb-2">
+                  <motion.p>PRIVACY POLICY</motion.p>
+                  <motion.p>TERMS OF USE</motion.p>
+                </div>
+                <motion.p>
+                  © 2024 THE WEDDING ADMIN | ALL RIGHTS RESERVED
+                </motion.p>
+              </div>
           </div>
-          <p className="text-sm">
-            © 2024 THE WEDDING ADMIN | ALL RIGHTS RESERVED
-          </p>
         </div>
-      </footer> */}
+      </footer>
     </div>
   );
 };
